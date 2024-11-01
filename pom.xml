@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.postgresql</groupId>
+	<artifactId>postgresql-osgi-wrapper</artifactId>
+	<packaging>bundle</packaging>
+	<version>42.7.4</version>
+
+	<name>postgresql-osgi-wrapper</name>
+	<description>PostgreSQL JDBC driver OSGi wrapper.</description>
+
+	<properties>
+		<maven.compiler.release>21</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>5.1.9</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<supportIncrementalBuild>true</supportIncrementalBuild>
+					<instructions>
+						<Bundle-License>free</Bundle-License>
+						<Bundle-Vendor>PostgreSQL</Bundle-Vendor>
+						<_exportcontents>*</_exportcontents>
+						<Export-Package>
+							org.postgresql.*;version="${project.version}"</Export-Package>
+						<Import-Package>*;resolution:=optional</Import-Package>
+						<Private-Package>!*</Private-Package>
+						<Embed-Dependency>
+							*;scope=compile|runtime;type=!pom;inline=true</Embed-Dependency>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
